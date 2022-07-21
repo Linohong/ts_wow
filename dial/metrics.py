@@ -185,6 +185,37 @@ def calc_rouge(cands, golds):
     rouge_result = rouge_evaluator.run_evaluation(predictions, answers)
     return rouge_result
 
+
+def recall_at(n, pred_record):
+    r = 0.0
+    l = len(pred_record)
+    for src, sorted_pred_record in pred_record.items():
+        for i, info_dict in enumerate(sorted_pred_record):
+            if i >= n:
+                break
+            else:
+                if info_dict['label'] == True:
+                    r += 1.0
+                    break
+
+    return (r/l)*100
+
+def dialogue_ks_evaluation(pred_record):
+    ra = {}
+    for i in range(1, 11):
+        ra[i] = recall_at(i, pred_record)
+
+    # dialogue_ks = 0.0
+    #
+    # for src, info in pred_record.items():
+    #     if info['label'] == True:
+    #         dialogue_ks += 1.0
+    # dialogue_ks = dialogue_ks / len(pred_record)
+
+    result = {'Recall@%s' % i:str(ra[i]) + '%' for i in range(1, 11)}
+
+    return result
+
 def dialogue_evaluation(ori_cands, ori_golds):
     assert len(ori_cands) == len(ori_golds), f"num cand: {len(ori_cands)}, num gold: {len(ori_golds)}"
     cands = []

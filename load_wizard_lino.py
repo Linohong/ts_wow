@@ -77,6 +77,57 @@ def save_seq2seq(samples, src_file, tgt_file):
             ft.write(tgt + '\n')
 
 
+
+
+episodes = load_episodes('dataset/wizard/test_seen.jsonl')
+outdir = Path('dataset/wizard_lino')
+outdir.mkdir(exist_ok=True, parents=True)
+samples = to_examples(episodes)
+examples_stat(samples)
+# assert 0
+torch.save(samples, outdir / 'test_seen.pkl')
+
+episodes = load_episodes('dataset/wizard/test_unseen.jsonl')
+outdir = Path('dataset/wizard_lino')
+outdir.mkdir(exist_ok=True, parents=True)
+samples = to_examples(episodes)
+examples_stat(samples)
+torch.save(samples, outdir / 'test_unseen.pkl')
+
+episodes = load_episodes('dataset/wizard/train.jsonl')
+num_epi = len(episodes)
+print("num eposodes:", num_epi)
+outdir = Path('dataset/wizard_lino')
+outdir.mkdir(exist_ok=True, parents=True)
+samples = to_examples(episodes)
+examples_stat(samples)
+torch.save(samples, outdir / 'train.pkl')
+
+# torch.save(to_examples(episodes[:num_epi // 2]), outdir / 'train_2.pkl')
+# torch.save(to_examples(episodes[:num_epi // 4]), outdir / 'train_4.pkl')
+# torch.save(to_examples(episodes[:num_epi // 8]), outdir / 'train_8.pkl')
+# torch.save(to_examples(episodes[:num_epi // 16]), outdir / 'train_16.pkl')
+# torch.save(to_examples(episodes[:num_epi // 32]), outdir / 'train_32.pkl')
+# torch.save(to_examples(episodes[:num_epi // 64]), outdir / 'train_64.pkl')
+# torch.save(to_examples(episodes[:num_epi // 128]), outdir / 'train_128.pkl')
+# torch.save(to_examples(episodes[:num_epi // 256]), outdir / 'train_256.pkl')
+# torch.save(to_examples(episodes[:num_epi // 512]), outdir / 'train_512.pkl')
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+
+
 episodes = load_episodes('dataset/wizard/test_seen.jsonl')
 outdir = Path('dataset/wizard_kat')
 outdir.mkdir(exist_ok=True, parents=True)
@@ -110,3 +161,5 @@ torch.save(to_examples(episodes[:num_epi // 64]), outdir / 'train_64.pkl')
 torch.save(to_examples(episodes[:num_epi // 128]), outdir / 'train_128.pkl')
 torch.save(to_examples(episodes[:num_epi // 256]), outdir / 'train_256.pkl')
 torch.save(to_examples(episodes[:num_epi // 512]), outdir / 'train_512.pkl')
+
+'''
